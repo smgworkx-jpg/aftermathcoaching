@@ -1,0 +1,2 @@
+import { ModulePage } from "@/components/dashboard/module-page";
+export default function MessagesPage(){return <ModulePage eyebrow="Coach communication" title="Messages" description="Focused one-to-one threads for coaching decisions, form feedback, and accountability." cta="New message" rows={[{title:"Mason Cole",meta:"Pull session felt strong. Added one rep on the top set.",status:"4 min"},{title:"Darius King",meta:"Can we adjust Saturday cardio around travel?",status:"Unread"},{title:"Ethan Brooks",meta:"Check-in photos uploaded.",status:"1 hr"}]}/>}

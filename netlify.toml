@@ -1,0 +1,39 @@
+[build]
+  command = "npm run build"
+  publish = ".next"
+
+[functions]
+  directory = "netlify/functions"
+
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/dashboard/:splat"
+  status = 200
+  conditions = { Role = ["admin", "coach"] }
+
+[[redirects]]
+  from = "/dashboard/*"
+  to = "/login"
+  status = 302
+
+[[redirects]]
+  from = "/admin"
+  to = "/admin"
+  status = 200
+  conditions = { Role = ["admin"] }
+
+[[redirects]]
+  from = "/admin"
+  to = "/login"
+  status = 302
+
+[[redirects]]
+  from = "/app/*"
+  to = "/app/:splat"
+  status = 200
+  conditions = { Role = ["client"] }
+
+[[redirects]]
+  from = "/app/*"
+  to = "/login"
+  status = 302

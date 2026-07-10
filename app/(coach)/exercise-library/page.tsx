@@ -1,0 +1,2 @@
+import { ModulePage } from "@/components/dashboard/module-page";
+export default function ExerciseLibraryPage(){return <ModulePage eyebrow="Movement database" title="Exercise library" description="A reusable, searchable exercise system with cues and equipment context." cta="Add exercise" rows={[{title:"Chest-supported T-bar row",meta:"Back · Machine · Upper-back density",status:"Global"},{title:"Neutral-grip pulldown",meta:"Lats · Cable · Shoulder friendly",status:"Global"},{title:"Blacklinez cable lateral",meta:"Delts · Cable · Custom coaching cue",status:"Custom"}]}/>}

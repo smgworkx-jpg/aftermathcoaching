@@ -1,0 +1,2 @@
+import { ModulePage } from "@/components/dashboard/module-page";
+export default function ProgramsPage(){return <ModulePage eyebrow="Programming system" title="Programs" description="Build reusable templates and athlete-specific training protocols without changing historical logs." cta="New program" rows={[{title:"Blacklinez Mass I",meta:"5 days · 16 weeks · 4 active clients",status:"Active"},{title:"Nocturnal Cut",meta:"4 days · 12 weeks · 8 active clients",status:"Active"},{title:"Prep Density Block",meta:"6 days · 8 weeks · 2 active clients",status:"Draft"}]}/>}

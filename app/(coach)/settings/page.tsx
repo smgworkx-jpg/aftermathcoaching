@@ -1,0 +1,4 @@
+import { SectionHeader } from "@/components/layout/section-header";
+import { Button } from "@/components/ui/button";
+import { Panel } from "@/components/ui/panel";
+export default function CoachSettingsPage(){return <><SectionHeader eyebrow="Workspace control" title="Settings" description="Manage coaching identity, availability, and notification defaults."/><Panel className="max-w-3xl p-6"><div className="grid gap-5 md:grid-cols-2"><label className="field-label">Display name<input className="field-input" defaultValue="Alexander Cross"/></label><label className="field-label">Timezone<input className="field-input" defaultValue="America/New_York"/></label><label className="field-label md:col-span-2">Coaching email<input className="field-input" defaultValue="coach@aftermathx.com"/></label></div><Button className="mt-6">Save settings</Button></Panel></>}
