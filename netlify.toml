@@ -2,14 +2,33 @@
   command = "npm run build"
   publish = ".next"
 
+[build.environment]
+  NODE_VERSION = "22"
+
 [functions]
   directory = "netlify/functions"
+
+# CDN-level role guards run before app code (defense in depth on top of the
+# server-side checks in the route layouts). Each protected section needs both a
+# "/section/*" and an exact "/section" rule, since the wildcard does not match
+# the bare path. Rules are evaluated top-to-bottom: members of the listed role
+# pass through, everyone else is sent to /login.
+[[redirects]]
+  from = "/dashboard"
+  to = "/dashboard"
+  status = 200
+  conditions = { Role = ["admin", "coach"] }
 
 [[redirects]]
   from = "/dashboard/*"
   to = "/dashboard/:splat"
   status = 200
   conditions = { Role = ["admin", "coach"] }
+
+[[redirects]]
+  from = "/dashboard"
+  to = "/login"
+  status = 302
 
 [[redirects]]
   from = "/dashboard/*"
@@ -23,15 +42,37 @@
   conditions = { Role = ["admin"] }
 
 [[redirects]]
+  from = "/admin/*"
+  to = "/admin/:splat"
+  status = 200
+  conditions = { Role = ["admin"] }
+
+[[redirects]]
   from = "/admin"
   to = "/login"
   status = 302
+
+[[redirects]]
+  from = "/admin/*"
+  to = "/login"
+  status = 302
+
+[[redirects]]
+  from = "/app"
+  to = "/app"
+  status = 200
+  conditions = { Role = ["client"] }
 
 [[redirects]]
   from = "/app/*"
   to = "/app/:splat"
   status = 200
   conditions = { Role = ["client"] }
+
+[[redirects]]
+  from = "/app"
+  to = "/login"
+  status = 302
 
 [[redirects]]
   from = "/app/*"
