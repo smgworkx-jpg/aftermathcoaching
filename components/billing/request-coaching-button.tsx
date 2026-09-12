@@ -72,142 +72,141 @@ export function RequestCoachingButton({ className, children }: Props) {
 
       {open && (
         <div
-          className="fixed inset-0 z-[70] overflow-y-auto overscroll-contain bg-black/80 p-3 backdrop-blur-sm sm:p-4"
+          className="fixed inset-0 z-[70] overflow-y-auto overscroll-contain bg-void/92 p-3 backdrop-blur-sm sm:p-4"
           onClick={() => !sending && setOpen(false)}
         >
           <div className="flex min-h-full items-center justify-center">
             <div
-              className="dialog-fit relative w-full max-w-3xl border border-violet-400/25 bg-[#11131a]/95 p-5 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl sm:p-7 md:p-8"
+              className="dialog-fit slab slab-ultra relative w-full max-w-3xl p-5 sm:p-7 md:p-8"
               onClick={(e) => e.stopPropagation()}
             >
+              <div className="absolute inset-x-0 top-0 h-1.5 stripes-tight" />
               <button
-                className="absolute right-3 top-3 text-slate-500 transition hover:text-white"
+                className="absolute right-3 top-4 border-2 border-edge p-1 text-ash transition hover:border-alert hover:text-alert"
                 onClick={() => !sending && setOpen(false)}
                 aria-label="Close"
               >
-                <X size={20} />
+                <X size={16} />
               </button>
-            {done ? (
-              <div className="py-6 text-center">
-                <div className="eyebrow">Request received</div>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase">You&apos;re on the list</h2>
-                <p className="mt-4 text-sm leading-6 text-slate-400">
-                  {done.accountCreated
-                    ? "Your application is in review and your account is ready. Sign in with your email and password to explore the athlete portal while you wait."
-                    : "Your application is in review. An account with this email already exists — sign in with your existing password to explore the athlete portal."}
-                </p>
-                <div className="mt-8 flex justify-center gap-3">
-                  <Button onClick={() => { setOpen(false); window.location.assign("/login"); }}>Sign in</Button>
-                  <Button variant="secondary" onClick={() => setOpen(false)}>Close</Button>
-                </div>
-              </div>
-            ) : (
-              <>
-                <div className="eyebrow">Coaching application</div>
-                <h2 className="mt-2 font-display text-2xl font-bold uppercase md:text-3xl">Request coaching</h2>
-                <p className="dialog-blurb mt-2 pr-8 text-sm leading-6 text-slate-500">
-                  Tell us where you&apos;re starting from and create your account in one step. Everything is reviewed
-                  personally — no bots, no auto-approval.
-                </p>
 
-                <form className="mt-5 grid grid-cols-1 items-end gap-4 sm:grid-cols-6" onSubmit={submit}>
-                  <label className="field-label block sm:col-span-3">
-                    Name
-                    <input
-                      className={field}
-                      autoComplete="name"
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                    />
-                  </label>
-                  <label className="field-label block sm:col-span-3">
-                    Email
-                    <input
-                      className={field}
-                      type="email"
-                      autoComplete="email"
-                      required
-                      value={form.email}
-                      onChange={(e) => setForm({ ...form, email: e.target.value })}
-                    />
-                  </label>
-                  <label className="field-label block sm:col-span-3">
-                    Password
-                    <input
-                      className={field}
-                      type="password"
-                      autoComplete="new-password"
-                      required
-                      minLength={8}
-                      placeholder="At least 8 characters"
-                      value={form.password}
-                      onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    />
-                  </label>
-                  <label className="field-label block sm:col-span-1">
-                    Age
-                    <input
-                      className={field}
-                      type="number"
-                      min={13}
-                      max={100}
-                      placeholder="28"
-                      value={form.age}
-                      onChange={(e) => setForm({ ...form, age: e.target.value })}
-                    />
-                  </label>
-                  <label className="field-label block sm:col-span-1">
-                    Weight
-                    <input
-                      className={field}
-                      type="number"
-                      step="0.1"
-                      min={0}
-                      placeholder="kg"
-                      value={form.bodyweight}
-                      onChange={(e) => setForm({ ...form, bodyweight: e.target.value })}
-                    />
-                  </label>
-                  <label className="field-label block sm:col-span-1">
-                    Sex
-                    <select
-                      className={field}
-                      value={form.sex}
-                      onChange={(e) => setForm({ ...form, sex: e.target.value })}
-                    >
-                      <option value="">—</option>
-                      <option value="male">Male</option>
-                      <option value="female">Female</option>
-                    </select>
-                  </label>
-                  <label className="field-label block sm:col-span-6">
-                    Goals
-                    <textarea
-                      className={field}
-                      required
-                      placeholder="What do you want to achieve? Timeline, past training, injuries, anything relevant."
-                      value={form.goals}
-                      onChange={(e) => setForm({ ...form, goals: e.target.value })}
-                    />
-                  </label>
-
-                  {error && (
-                    <p className="border border-fuchsia-400/20 bg-fuchsia-500/10 p-3 text-sm text-fuchsia-200 sm:col-span-6">
-                      {error}
-                    </p>
-                  )}
-
-                  <div className="sm:col-span-6">
-                    <Button className="w-full" disabled={sending || !form.goals.trim() || !form.email.trim() || form.password.length < 8}>
-                      {sending ? "Sending…" : "Submit application"}
-                    </Button>
-                    <p className="dialog-note mt-3 text-center text-[11px] text-slate-600">
-                      No payment to apply · Your account is created instantly with the client role
-                    </p>
+              {done ? (
+                <div className="py-6 text-center">
+                  <div className="eyebrow">Application logged</div>
+                  <h2 className="headline mt-3 text-4xl text-bone md:text-5xl">You&apos;re in the queue</h2>
+                  <p className="mx-auto mt-4 max-w-md text-sm leading-6 text-ash">
+                    {done.accountCreated
+                      ? "Your application is in review and your account is live. Sign in with your email and password to walk the athlete portal while you wait."
+                      : "Your application is in review. An account already exists for this email — sign in with your existing password to reach the athlete portal."}
+                  </p>
+                  <div className="mt-8 flex flex-wrap justify-center gap-3">
+                    <Button onClick={() => { setOpen(false); window.location.assign("/login"); }}>Sign in</Button>
+                    <Button variant="secondary" onClick={() => setOpen(false)}>Close</Button>
                   </div>
-                </form>
-              </>
-            )}
+                </div>
+              ) : (
+                <>
+                  <div className="eyebrow pt-1">Coaching application</div>
+                  <h2 className="headline mt-2 pr-10 text-3xl text-bone md:text-5xl">Request coaching</h2>
+                  <p className="dialog-blurb mt-3 max-w-xl text-sm leading-6 text-ash">
+                    Your numbers, your goal, your account — one pass. Every application is read personally.
+                  </p>
+
+                  <form className="mt-5 grid grid-cols-1 items-end gap-4 sm:grid-cols-6" onSubmit={submit}>
+                    <label className="field-label sm:col-span-3">
+                      Name
+                      <input
+                        className={field}
+                        autoComplete="name"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                      />
+                    </label>
+                    <label className="field-label sm:col-span-3">
+                      Email
+                      <input
+                        className={field}
+                        type="email"
+                        autoComplete="email"
+                        required
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                      />
+                    </label>
+                    <label className="field-label sm:col-span-3">
+                      Password
+                      <input
+                        className={field}
+                        type="password"
+                        autoComplete="new-password"
+                        required
+                        minLength={8}
+                        placeholder="8 characters minimum"
+                        value={form.password}
+                        onChange={(e) => setForm({ ...form, password: e.target.value })}
+                      />
+                    </label>
+                    <label className="field-label sm:col-span-1">
+                      Age
+                      <input
+                        className={field}
+                        type="number"
+                        min={13}
+                        max={100}
+                        placeholder="28"
+                        value={form.age}
+                        onChange={(e) => setForm({ ...form, age: e.target.value })}
+                      />
+                    </label>
+                    <label className="field-label sm:col-span-1">
+                      Weight
+                      <input
+                        className={field}
+                        type="number"
+                        step="0.1"
+                        min={0}
+                        placeholder="kg"
+                        value={form.bodyweight}
+                        onChange={(e) => setForm({ ...form, bodyweight: e.target.value })}
+                      />
+                    </label>
+                    <label className="field-label sm:col-span-1">
+                      Sex
+                      <select
+                        className={field}
+                        value={form.sex}
+                        onChange={(e) => setForm({ ...form, sex: e.target.value })}
+                      >
+                        <option value="">—</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </label>
+                    <label className="field-label sm:col-span-6">
+                      Goals
+                      <textarea
+                        className={field}
+                        required
+                        placeholder="Target, timeline, training history, injuries — anything that shapes the plan."
+                        value={form.goals}
+                        onChange={(e) => setForm({ ...form, goals: e.target.value })}
+                      />
+                    </label>
+
+                    {error && (
+                      <p className="slab slab-alert slab-tight p-3 text-sm text-alert sm:col-span-6">{error}</p>
+                    )}
+
+                    <div className="sm:col-span-6">
+                      <Button className="w-full" disabled={sending || !form.goals.trim() || !form.email.trim() || form.password.length < 8}>
+                        {sending ? "Sending" : "Submit application"}
+                      </Button>
+                      <p className="dialog-note mono-label mt-3 text-center text-[.55rem]">
+                        No payment to apply · Account created instantly
+                      </p>
+                    </div>
+                  </form>
+                </>
+              )}
             </div>
           </div>
         </div>

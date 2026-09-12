@@ -5,5 +5,116 @@ import { Panel } from "@/components/ui/panel";
 import { ProgressRing } from "@/components/ui/progress-ring";
 import { weightData, workoutExercises } from "@/lib/demo-data";
 
-export default function ClientDetailPage() { return <><SectionHeader eyebrow="Athlete profile / Active" title="Mason Cole" description="Mass phase · Week 8 of 16 · Next check-in due today" action={<div className="flex gap-2"><Button variant="secondary"><MessageSquare size={16}/> Message</Button><Button><Pencil size={16}/> Edit protocol</Button></div>}/><div className="grid gap-5 xl:grid-cols-[1.3fr_.7fr]"><div className="grid gap-5"><Panel className="p-5"><div className="flex items-center justify-between"><h2 className="font-display text-xl font-bold uppercase">Performance trajectory</h2><span className="text-xs text-violet-300">+2.2 lb / 8 weeks</span></div><div className="mt-8 flex h-44 items-end gap-3">{weightData.map((value,index)=><div key={index} className="group relative flex-1"><div className="absolute -top-6 hidden w-full text-center text-[9px] text-violet-300 group-hover:block">{value}</div><div className="bg-gradient-to-t from-violet-900/30 to-violet-400" style={{height:`${40+(value-183)*20}px`,opacity:.45+index*.06}}/></div>)}</div><div className="mt-3 flex justify-between text-[9px] uppercase tracking-widest text-slate-700"><span>Week 1</span><span>Week 8</span></div></Panel><Panel className="p-5"><div className="mb-4 flex justify-between"><h2 className="font-display text-xl font-bold uppercase">Current program</h2><span className="text-xs text-slate-500">Blacklinez Mass I</span></div>{workoutExercises.slice(0,3).map((exercise,index)=><div key={exercise.name} className="flex items-center gap-4 border-t border-white/[.05] py-4"><span className="font-display text-lg text-slate-700">0{index+1}</span><div className="flex-1"><div className="text-sm font-semibold text-white">{exercise.name}</div><div className="text-xs text-slate-600">{exercise.note}</div></div><div className="text-sm text-violet-300">{exercise.prescription}</div></div>)}</Panel></div><div className="grid gap-5"><Panel className="flex items-center justify-around p-5"><ProgressRing value={94} label="training"/><ProgressRing value={86} label="habits"/></Panel><Panel className="p-5"><div className="eyebrow">Quick profile</div><div className="mt-5 grid grid-cols-2 gap-4">{[["Goal","Muscle gain"],["Experience","Advanced"],["Training","5 days"],["Check-in","Friday"],["Steps","10,000"],["Timezone","EST"]].map(([label,value])=><div key={label}><div className="text-[9px] uppercase tracking-wider text-slate-700">{label}</div><div className="mt-1 text-sm text-slate-300">{value}</div></div>)}</div></Panel><Panel className="p-5"><div className="flex items-center gap-2"><ClipboardCheck size={16} className="text-violet-300"/><h2 className="font-display text-lg font-bold uppercase">Coach note</h2></div><p className="mt-4 text-sm leading-6 text-slate-500">Push food up if the seven-day average stalls again. Elbow is tolerating neutral grip work well.</p><button className="mt-4 text-xs text-violet-300">Update private note</button></Panel><Panel className="grid grid-cols-2 gap-px overflow-hidden p-0"><Quick icon={Dumbbell} label="Program"/><Quick icon={Calendar} label="Check-ins"/></Panel></div></div></> }
-function Quick({icon:Icon,label}:{icon:typeof Dumbbell;label:string}) { return <button className="flex items-center justify-center gap-2 bg-white/[.02] p-4 text-xs text-slate-400 hover:bg-violet-500/[.07] hover:text-white"><Icon size={15} className="text-violet-300"/>{label}</button> }
+const profile = [
+  ["Goal", "Muscle gain"],
+  ["Experience", "Advanced"],
+  ["Training", "5 days"],
+  ["Check-in", "Friday"],
+  ["Steps", "10,400"],
+  ["Timezone", "EST"],
+];
+
+export default function ClientDetailPage() {
+  return (
+    <>
+      <SectionHeader
+        eyebrow="Athlete profile / active"
+        title="Mason Cole"
+        description="Mass phase · Week 8 of 16 · Next check-in due today"
+        action={
+          <div className="flex flex-wrap gap-3">
+            <Button variant="secondary"><MessageSquare size={15} /> Message</Button>
+            <Button><Pencil size={15} /> Edit protocol</Button>
+          </div>
+        }
+      />
+
+      <div className="grid gap-6 xl:grid-cols-[1.3fr_.7fr]">
+        <div className="grid content-start gap-6">
+          <Panel className="p-5 md:p-6">
+            <div className="flex flex-wrap items-end justify-between gap-3">
+              <h2 className="headline text-2xl text-bone">Performance trajectory</h2>
+              <span className="mono-label border-2 border-neon px-2.5 py-1.5 text-lilac">+2.2 lb / 8 weeks</span>
+            </div>
+            <div className="mt-8 flex h-44 items-end gap-2.5">
+              {weightData.map((value, index) => (
+                <div key={index} className="group relative flex-1">
+                  <div className="mono-label absolute -top-6 w-full text-center text-[.52rem] text-lilac opacity-0 transition group-hover:opacity-100">
+                    {value}
+                  </div>
+                  <div
+                    className={index === weightData.length - 1 ? "bg-bone" : "bg-neon"}
+                    style={{ height: `${40 + (value - 183) * 20}px`, opacity: index === weightData.length - 1 ? 1 : 0.4 + index * 0.07 }}
+                  />
+                </div>
+              ))}
+            </div>
+            <div className="mono-label mt-3 flex justify-between border-t-2 border-edge pt-3 text-[.52rem]">
+              <span>Week 1</span>
+              <span>Week 8</span>
+            </div>
+          </Panel>
+
+          <Panel className="p-5 md:p-6">
+            <div className="flex flex-wrap items-end justify-between gap-3 border-b-2 border-edge pb-4">
+              <h2 className="headline text-2xl text-bone">Current program</h2>
+              <span className="mono-label">Blacklinez Mass I</span>
+            </div>
+            {workoutExercises.slice(0, 3).map((exercise, index) => (
+              <div key={exercise.name} className="flex items-center gap-4 border-b-2 border-edge py-4 last:border-b-0">
+                <span className="hollow-num shrink-0 text-3xl leading-none">0{index + 1}</span>
+                <div className="min-w-0 flex-1">
+                  <div className="text-sm font-semibold text-bone">{exercise.name}</div>
+                  <div className="mono-label mt-1 text-[.52rem]">{exercise.note}</div>
+                </div>
+                <div className="mono-data shrink-0 font-display text-lg text-lilac">{exercise.prescription}</div>
+              </div>
+            ))}
+          </Panel>
+        </div>
+
+        <div className="grid content-start gap-6">
+          <Panel className="grid gap-6 p-5 sm:grid-cols-2">
+            <ProgressRing value={94} label="training" />
+            <ProgressRing value={86} label="habits" />
+          </Panel>
+          <Panel className="p-5">
+            <div className="mono-label">Quick profile</div>
+            <div className="mt-5 grid grid-cols-2 gap-px border-2 border-edge bg-edge">
+              {profile.map(([label, value]) => (
+                <div key={label} className="bg-coal p-3">
+                  <div className="mono-label text-[.5rem]">{label}</div>
+                  <div className="mt-1 text-sm text-bone">{value}</div>
+                </div>
+              ))}
+            </div>
+          </Panel>
+          <Panel tone="ultra" className="p-5">
+            <div className="flex items-center gap-2.5">
+              <ClipboardCheck size={16} className="text-lilac" />
+              <h2 className="headline text-xl text-bone">Coach note</h2>
+            </div>
+            <p className="mt-4 text-sm leading-6 text-ash">
+              Push food up if the seven-day average stalls again. Elbow is tolerating neutral-grip work well.
+            </p>
+            <button className="mono-label mt-5 border-2 border-edge px-3 py-2 text-lilac transition hover:border-neon hover:text-bone">
+              Update private note
+            </button>
+          </Panel>
+          <div className="grid grid-cols-2 gap-px border-2 border-edge bg-edge">
+            <Quick icon={Dumbbell} label="Program" />
+            <Quick icon={Calendar} label="Check-ins" />
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Quick({ icon: Icon, label }: { icon: typeof Dumbbell; label: string }) {
+  return (
+    <button className="mono-label flex items-center justify-center gap-2 bg-coal p-4 text-lilac transition hover:bg-neon hover:text-void">
+      <Icon size={15} /> {label}
+    </button>
+  );
+}

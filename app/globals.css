@@ -1,68 +1,172 @@
 @import "tailwindcss";
 
-:root {
-  --background: #09090d;
-  --surface: #141824;
-  --surface-elevated: #1a1f2b;
-  --purple: #8b5cf6;
-  --purple-bright: #a855f7;
-  --text: #f8fafc;
-  --muted: #9aa4b2;
+/* ============================================================================
+   AFTERMATH X / BLACKLINEZ — "PRESS" DESIGN LANGUAGE
+   Black-and-purple fight-poster brutalism. Flat slabs with hard offset
+   shadows, diagonal hazard stripes, marquee tickers, oversized condensed
+   type. Deliberately no soft glows, no gradients-as-decoration, no radii.
+   ========================================================================= */
+
+@theme {
+  --color-void: #08070b;
+  --color-coal: #0f0d15;
+  --color-slab: #15121d;
+  --color-edge: #241d33;
+  --color-ultra: #7c3aed;
+  --color-neon: #9d4bff;
+  --color-lilac: #c9a9ff;
+  --color-bone: #f6f2ff;
+  --color-ash: #8a8397;
+  --color-alert: #ff2e63;
+
+  --font-display: var(--font-anton), "Arial Narrow", sans-serif;
+  --font-body: var(--font-chivo), system-ui, sans-serif;
+  --font-mono: var(--font-azeret), ui-monospace, monospace;
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--background); color: var(--text); font-family: var(--font-body), sans-serif; }
-button, input, textarea { font: inherit; }
+body {
+  margin: 0;
+  background: var(--color-void);
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+button, input, textarea, select { font: inherit; color: inherit; }
 button, a { -webkit-tap-highlight-color: transparent; }
-::selection { background: rgba(139,92,246,.35); color: white; }
+::selection { background: var(--color-neon); color: #0a0410; }
+::-webkit-scrollbar { width: 11px; height: 11px; }
+::-webkit-scrollbar-track { background: #0b0910; }
+::-webkit-scrollbar-thumb { background: var(--color-ultra); border: 3px solid #0b0910; }
+::-webkit-scrollbar-thumb:hover { background: var(--color-neon); }
 
-.font-display { font-family: var(--font-display), sans-serif; }
+/* --- Page grounds ------------------------------------------------------- */
+/* Halftone dot field over off-black, with one purple corner wash. The grain
+   overlay is fixed and non-interactive so it never taxes scrolling. */
 .bg-app, .bg-cinematic {
   position: relative;
-  background:
-    radial-gradient(circle at 88% 5%, rgba(139,92,246,.12), transparent 25rem),
-    radial-gradient(circle at 8% 90%, rgba(91,33,182,.1), transparent 30rem),
-    linear-gradient(180deg, #09090d 0%, #0d1016 100%);
-}
-.bg-app::before, .bg-cinematic::before {
-  content: ""; position: fixed; inset: 0; pointer-events: none; opacity: .23;
-  background-image: linear-gradient(rgba(255,255,255,.022) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.018) 1px, transparent 1px);
-  background-size: 72px 72px; mask-image: linear-gradient(to bottom, black, transparent 70%);
+  background-color: var(--color-void);
+  background-image:
+    radial-gradient(rgba(157, 75, 255, .11) 1px, transparent 1px),
+    radial-gradient(circle at 100% 0%, rgba(124, 58, 237, .18), transparent 40rem);
+  background-size: 22px 22px, 100% 100%;
 }
 .bg-app::after, .bg-cinematic::after {
-  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .028;
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 100; opacity: .04;
   background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.9'/%3E%3C/svg%3E");
 }
-.surface-panel {
-  border: 1px solid rgba(255,255,255,.075); background: linear-gradient(145deg, rgba(24,28,40,.88), rgba(15,17,23,.9));
-  box-shadow: 0 18px 60px rgba(0,0,0,.22); backdrop-filter: blur(16px);
-  clip-path: polygon(0 0, calc(100% - 12px) 0, 100% 12px, 100% 100%, 0 100%);
+
+/* --- Hazard stripes ----------------------------------------------------- */
+.stripes { background-image: repeating-linear-gradient(-45deg, var(--color-ultra) 0 10px, transparent 10px 20px); }
+.stripes-tight { background-image: repeating-linear-gradient(-45deg, var(--color-ultra) 0 5px, transparent 5px 10px); }
+.stripes-alert { background-image: repeating-linear-gradient(-45deg, var(--color-alert) 0 6px, transparent 6px 12px); }
+.stripes-bone { background-image: repeating-linear-gradient(-45deg, rgba(246, 242, 255, .8) 0 6px, transparent 6px 12px); }
+
+/* --- Slabs: the core surface ------------------------------------------- */
+.slab { border: 2px solid var(--color-edge); background: var(--color-coal); box-shadow: 6px 6px 0 0 #120c1f; }
+.slab-tight { box-shadow: 3px 3px 0 0 #120c1f; }
+.slab-flush { box-shadow: none; }
+.slab-ultra { border-color: rgba(157, 75, 255, .6); background: #170d28; box-shadow: 6px 6px 0 0 #2a1150; }
+.slab-alert { border-color: rgba(255, 46, 99, .55); background: #1b0b12; box-shadow: 6px 6px 0 0 #3d0b1d; }
+.slab-bone { border-color: var(--color-bone); background: var(--color-bone); color: #0a0410; box-shadow: 6px 6px 0 0 var(--color-ultra); }
+.slab-lift { transition: transform .16s cubic-bezier(.2, .8, .2, 1), box-shadow .16s cubic-bezier(.2, .8, .2, 1), border-color .16s; }
+.slab-lift:hover { transform: translate(-3px, -3px); border-color: rgba(157, 75, 255, .55); box-shadow: 10px 10px 0 0 var(--color-ultra); }
+
+/* --- Buttons: physical press ------------------------------------------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .55rem;
+  height: 3.1rem; padding: 0 1.5rem; border: 2px solid transparent;
+  font-family: var(--font-mono); font-size: .7rem; font-weight: 700;
+  letter-spacing: .2em; text-transform: uppercase; white-space: nowrap; cursor: pointer;
+  transition: transform .12s ease, box-shadow .12s ease, background-color .16s ease, color .16s ease, border-color .16s ease;
 }
-.clip-button { clip-path: polygon(0 0, calc(100% - 9px) 0, 100% 9px, 100% 100%, 9px 100%, 0 calc(100% - 9px)); }
-.nav-active { border-left: 2px solid #a855f7; background: linear-gradient(90deg, rgba(139,92,246,.14), transparent); box-shadow: inset 16px 0 30px rgba(139,92,246,.03); }
-.field-label { display: grid; gap: .5rem; color: #cbd5e1; font-size: .75rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; }
-.field-label > span { color: #c084fc; font-size: .7rem; font-weight: 500; letter-spacing: 0; text-transform: none; }
-.field-input { height: 3rem; width: 100%; border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.035); padding: 0 .9rem; color: white; outline: none; transition: .2s; text-transform: none; letter-spacing: 0; font-weight: 400; }
-.field-input:focus { border-color: rgba(168,85,247,.65); box-shadow: 0 0 0 3px rgba(139,92,246,.1); }
-select.field-input { appearance: auto; padding-right: 2rem; }
-select.field-input option { background: #11131a; color: white; }
-textarea.field-input { height: auto; min-height: 7rem; padding: .8rem .9rem; }
-/* Coaching dialog: shrink the form to fit the viewport so every field and the
-   submit button are visible at once, without any internal scrolling. */
-.dialog-fit textarea.field-input { min-height: 5.5rem; }
+.btn:focus-visible { outline: 2px solid var(--color-lilac); outline-offset: 3px; }
+.btn:disabled { pointer-events: none; opacity: .4; }
+.btn-primary { background: var(--color-neon); border-color: var(--color-neon); color: #0a0410; font-weight: 800; box-shadow: 5px 5px 0 0 #2a1150; }
+.btn-primary:hover { background: var(--color-lilac); border-color: var(--color-lilac); box-shadow: 8px 8px 0 0 var(--color-ultra); transform: translate(-2px, -2px); }
+.btn-primary:active { box-shadow: 1px 1px 0 0 var(--color-ultra); transform: translate(3px, 3px); }
+.btn-bone { background: var(--color-bone); border-color: var(--color-bone); color: #0a0410; font-weight: 800; box-shadow: 5px 5px 0 0 var(--color-ultra); }
+.btn-bone:hover { background: #fff; box-shadow: 8px 8px 0 0 var(--color-neon); transform: translate(-2px, -2px); }
+.btn-bone:active { box-shadow: 1px 1px 0 0 var(--color-neon); transform: translate(3px, 3px); }
+.btn-outline { background: transparent; border-color: var(--color-edge); color: var(--color-bone); box-shadow: 5px 5px 0 0 #120c1f; }
+.btn-outline:hover { border-color: var(--color-neon); color: var(--color-lilac); box-shadow: 8px 8px 0 0 #1d0f33; transform: translate(-2px, -2px); }
+.btn-outline:active { box-shadow: 1px 1px 0 0 #1d0f33; transform: translate(3px, 3px); }
+.btn-ghost { background: transparent; border-color: transparent; color: var(--color-ash); }
+.btn-ghost:hover { background: rgba(157, 75, 255, .14); color: var(--color-bone); }
+
+/* --- Type ---------------------------------------------------------------- */
+.headline { font-family: var(--font-display); font-weight: 400; text-transform: uppercase; line-height: .82; letter-spacing: -.005em; }
+.font-display { font-family: var(--font-display); font-weight: 400; }
+.hollow { color: transparent; -webkit-text-stroke: 1.5px var(--color-lilac); }
+.hollow-ultra { color: transparent; -webkit-text-stroke: 1.5px var(--color-neon); }
+.hollow-num { font-family: var(--font-display); color: transparent; -webkit-text-stroke: 1.25px rgba(157, 75, 255, .55); }
+.eyebrow { font-family: var(--font-mono); font-size: .62rem; font-weight: 700; letter-spacing: .3em; text-transform: uppercase; color: var(--color-lilac); }
+.mono-label { font-family: var(--font-mono); font-size: .6rem; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--color-ash); }
+.mono-data { font-family: var(--font-mono); font-variant-numeric: tabular-nums; letter-spacing: -.01em; }
+
+/* Rotated sticker badge — used for statuses and callouts. */
+.sticker {
+  display: inline-flex; align-items: center; gap: .4rem;
+  background: var(--color-neon); color: #0a0410;
+  font-family: var(--font-mono); font-size: .6rem; font-weight: 800;
+  letter-spacing: .2em; text-transform: uppercase; padding: .45rem .8rem;
+  transform: rotate(-2.5deg); box-shadow: 4px 4px 0 0 #2a1150;
+}
+.sticker-bone { background: var(--color-bone); box-shadow: 4px 4px 0 0 var(--color-ultra); }
+.sticker-alert { background: var(--color-alert); color: #16040b; box-shadow: 4px 4px 0 0 #3d0b1d; }
+
+/* --- Marquee ticker ----------------------------------------------------- */
+.ticker { display: flex; overflow: hidden; user-select: none; }
+.ticker-track { display: flex; flex: none; align-items: center; gap: 2.25rem; padding-right: 2.25rem; min-width: 100%; animation: ticker-roll 30s linear infinite; }
+.ticker-slow .ticker-track { animation-duration: 52s; }
+.ticker-reverse .ticker-track { animation-direction: reverse; }
+@keyframes ticker-roll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+
+/* --- Form fields -------------------------------------------------------- */
+.field-label { display: grid; gap: .5rem; font-family: var(--font-mono); font-size: .6rem; font-weight: 700; letter-spacing: .2em; text-transform: uppercase; color: var(--color-ash); }
+.field-label > span { font-family: var(--font-body); font-size: .72rem; font-weight: 500; letter-spacing: 0; text-transform: none; color: var(--color-alert); }
+.field-input {
+  height: 3rem; width: 100%; border: 2px solid var(--color-edge); background: #0b0910;
+  padding: 0 .85rem; color: var(--color-bone); outline: none;
+  font-family: var(--font-body); font-weight: 400; text-transform: none; letter-spacing: 0;
+  transition: border-color .15s ease, box-shadow .15s ease;
+}
+.field-input::placeholder { color: #5b546b; }
+.field-input:focus { border-color: var(--color-neon); box-shadow: 4px 4px 0 0 #2a1150; }
+select.field-input { appearance: auto; padding-right: 2rem; cursor: pointer; }
+select.field-input option { background: var(--color-slab); color: var(--color-bone); }
+textarea.field-input { height: auto; min-height: 7rem; padding: .7rem .85rem; resize: vertical; line-height: 1.5; }
+
+/* Coaching dialog: shrink to fit short viewports so every field and the
+   submit button stay visible at once, with no internal scrolling. */
+.dialog-fit textarea.field-input { min-height: 5.25rem; }
 @media (max-height: 880px) {
+  .dialog-fit .field-label { gap: .35rem; }
   .dialog-fit .field-input { height: 2.7rem; }
-  .dialog-fit textarea.field-input { min-height: 4.5rem; padding: .55rem .9rem; }
+  .dialog-fit textarea.field-input { min-height: 4.25rem; padding: .5rem .85rem; }
   .dialog-fit .dialog-blurb { display: none; }
 }
 @media (max-height: 720px) {
   .dialog-fit .field-input { height: 2.45rem; }
-  .dialog-fit textarea.field-input { min-height: 3.6rem; }
+  .dialog-fit textarea.field-input { min-height: 3.5rem; }
   .dialog-fit .dialog-note { display: none; }
 }
-.eyebrow { font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .32em; color: #c084fc; }
-.hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(168,85,247,.5), transparent); }
-@keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
-.reveal { animation: rise .7s cubic-bezier(.22,.8,.22,1) both; }
-.delay-1 { animation-delay: .12s; }.delay-2 { animation-delay: .22s; }.delay-3 { animation-delay: .32s; }
+
+/* --- Entrance choreography --------------------------------------------- */
+@keyframes press-in { from { opacity: 0; transform: translate3d(0, 22px, 0); } to { opacity: 1; transform: none; } }
+@keyframes slice-in { from { opacity: 0; transform: translate3d(-28px, 0, 0) skewX(-6deg); } to { opacity: 1; transform: none; } }
+.reveal { animation: press-in .7s cubic-bezier(.16, .84, .26, 1) both; }
+.reveal-slice { animation: slice-in .8s cubic-bezier(.16, .84, .26, 1) both; }
+.delay-1 { animation-delay: .09s; }
+.delay-2 { animation-delay: .18s; }
+.delay-3 { animation-delay: .27s; }
+.delay-4 { animation-delay: .36s; }
+.delay-5 { animation-delay: .45s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ticker-track { animation: none; }
+  .reveal, .reveal-slice { animation: none; }
+  .slab-lift:hover, .btn:hover, .btn:active { transform: none; }
+  html { scroll-behavior: auto; }
+}

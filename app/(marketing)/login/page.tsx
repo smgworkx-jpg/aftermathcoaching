@@ -1,4 +1,16 @@
-import { BrandMark } from "@/components/brand-mark";
 import { AuthForm } from "@/components/auth/auth-form";
+import { AuthShell } from "@/components/auth/auth-shell";
 
-export default function LoginPage() { return <main className="grid min-h-screen place-items-center px-5 pb-16 pt-32"><div className="w-full max-w-md border border-white/[.08] bg-[#11131a]/85 p-7 shadow-2xl backdrop-blur-xl md:p-9"><BrandMark/><div className="mt-10 eyebrow">Secure access</div><h1 className="mt-3 font-display text-4xl font-bold uppercase">Enter command center</h1><p className="mt-2 text-sm leading-6 text-slate-500">Access your coaching workspace, protocols, and progress data.</p><AuthForm mode="login"/></div></main> }
+export default function LoginPage() {
+  return (
+    <AuthShell
+      eyebrow="Secure access"
+      title="Enter the"
+      outlined="console."
+      description="Your protocols, check-ins, habit standards, and progress history — all in one place, waiting exactly where you left them."
+      points={["Today's session, already prescribed", "Check-in history and coach notes", "Bodyweight and strength trends"]}
+    >
+      <AuthForm mode="login" />
+    </AuthShell>
+  );
+}

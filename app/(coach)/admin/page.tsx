@@ -61,39 +61,51 @@ export default async function AdminPage() {
         description="Manage roles, accounts, and revenue across the entire platform."
       />
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        <StatCard label="Total users" value={String(adminUsers.length)} detail={`${roleCount("coach")} coaches · ${roleCount("client")} clients`} icon={Users} />
+        <StatCard
+          label="Total users"
+          value={String(adminUsers.length)}
+          detail={`${roleCount("coach")} coaches · ${roleCount("client")} clients`}
+          icon={Users}
+        />
         <StatCard label="Admins" value={String(roleCount("admin"))} detail="Full platform access" icon={Shield} />
-        <StatCard label="Active subscriptions" value={String(activeSubs.length)} detail={`${subs.length} total on record`} icon={CreditCard} />
+        <StatCard
+          label="Active subscriptions"
+          value={String(activeSubs.length)}
+          detail={`${subs.length} total on record`}
+          icon={CreditCard}
+        />
         <StatCard label="Monthly recurring" value={priceDisplay(mrrCents)} detail="From active subscriptions" icon={Activity} />
       </div>
 
-      <div className="mt-5 grid gap-5 xl:grid-cols-[1.55fr_.45fr]">
+      <div className="mt-8 grid gap-6 xl:grid-cols-[1.55fr_.45fr]">
         <Panel className="overflow-hidden">
-          <div className="flex items-center gap-3 border-b border-white/[.06] p-5">
-            <UserCog size={18} className="text-violet-300" />
+          <div className="flex items-center gap-3 border-b-2 border-edge p-5">
+            <div className="grid size-10 shrink-0 place-items-center border-2 border-neon bg-neon text-void">
+              <UserCog size={18} />
+            </div>
             <div>
-              <h2 className="font-display text-xl font-bold uppercase text-white">User management</h2>
-              <p className="mt-1 text-xs text-slate-600">Change roles or suspend accounts. Role changes apply immediately.</p>
+              <h2 className="headline text-2xl text-bone">User management</h2>
+              <p className="mono-label mt-1.5">Role changes apply immediately</p>
             </div>
           </div>
           <UsersTable users={adminUsers} />
         </Panel>
 
         <Panel className="p-5">
-          <div className="eyebrow">Subscription plans</div>
+          <div className="mono-label border-b-2 border-edge pb-3">Subscription plans</div>
           <div className="mt-5 space-y-4">
-            {plans.length === 0 && <p className="text-sm text-slate-500">No plans configured.</p>}
+            {plans.length === 0 && <p className="text-sm text-ash">No plans configured yet.</p>}
             {plans.map((plan) => {
               const count = activeSubs.filter((s) => s.planId === plan.id).length;
               return (
-                <div key={plan.id} className="border border-white/[.06] bg-white/[.02] p-4">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm font-semibold text-white">{plan.name}</div>
-                    <div className="font-display text-lg font-bold text-white">{priceDisplay(plan.amountCents)}</div>
+                <div key={plan.id} className="border-2 border-edge bg-void p-4">
+                  <div className="flex items-end justify-between gap-3">
+                    <div className="font-display text-lg uppercase leading-none text-bone">{plan.name}</div>
+                    <div className="mono-data font-display text-xl text-lilac">{priceDisplay(plan.amountCents)}</div>
                   </div>
-                  <div className="mt-1 flex items-center justify-between text-[11px] text-slate-600">
+                  <div className="mono-label mt-2 flex items-center justify-between text-[.52rem]">
                     <span>{count} active</span>
-                    <span className="uppercase tracking-wide">/ {plan.interval}</span>
+                    <span>/ {plan.interval}</span>
                   </div>
                 </div>
               );
