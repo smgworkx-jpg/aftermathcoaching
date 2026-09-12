@@ -16,7 +16,7 @@ export default function HabitsPage() {
             key={habit.name}
             className={`slab slab-lift flex w-full items-center gap-4 p-5 text-left ${habit.complete ? "slab-ultra" : ""}`}
           >
-            <span className={`grid size-10 shrink-0 place-items-center border-2 ${habit.complete ? "border-neon bg-neon text-void" : "border-edge text-transparent"}`}>
+            <span className={`grid size-10 shrink-0 place-items-center border-2 ${habit.complete ? "border-neon bg-neon text-bone" : "border-edge text-transparent"}`}>
               <Check size={18} strokeWidth={3} />
             </span>
             <span className="min-w-0 flex-1">

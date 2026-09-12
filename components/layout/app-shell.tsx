@@ -34,7 +34,7 @@ export function AppShell({
               key={href}
               href={href}
               className="group flex items-center gap-3 border-2 px-3 py-2.5 font-mono text-[.68rem] font-bold uppercase tracking-[.14em] transition"
-              activeClassName="border-neon bg-neon text-void shadow-[4px_4px_0_0_#2a1150]"
+              activeClassName="border-neon bg-neon text-bone shadow-[4px_4px_0_0_#1b0937]"
               idleClassName="border-transparent text-ash hover:border-edge hover:bg-slab hover:text-bone"
             >
               <Icon size={16} className="shrink-0" />
@@ -66,7 +66,7 @@ export function AppShell({
               <div className="font-display text-sm uppercase tracking-wide text-bone">{person}</div>
               <div className="mono-label text-[.55rem] text-lilac">{label}</div>
             </div>
-            <div className="grid size-10 place-items-center border-2 border-neon bg-neon font-mono text-xs font-extrabold text-void">
+            <div className="grid size-10 place-items-center border-2 border-neon bg-neon font-mono text-xs font-extrabold text-bone">
               {initials}
             </div>
           </div>
@@ -80,7 +80,7 @@ export function AppShell({
             key={href}
             href={href}
             className="flex min-w-0 flex-1 flex-col items-center gap-1 border-2 px-1 py-1.5 font-mono text-[.5rem] font-bold uppercase tracking-[.1em] transition"
-            activeClassName="border-neon bg-neon text-void"
+            activeClassName="border-neon bg-neon text-bone"
             idleClassName="border-transparent text-ash"
           >
             <Icon size={17} />

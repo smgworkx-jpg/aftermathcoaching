@@ -50,7 +50,7 @@ export default function PricingPage() {
               {included.map(([title, detail]) => (
                 <div key={title} className="bg-coal p-5">
                   <div className="flex items-center gap-2.5">
-                    <span className="grid size-5 shrink-0 place-items-center bg-neon text-void">
+                    <span className="grid size-5 shrink-0 place-items-center bg-neon text-bone">
                       <Check size={13} strokeWidth={3} />
                     </span>
                     <span className="font-display text-lg uppercase leading-none text-bone">{title}</span>

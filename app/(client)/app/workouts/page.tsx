@@ -15,7 +15,7 @@ export default function WorkoutsPage() {
           return (
             <Link href="/app/workouts/1" key={day}>
               <Panel lift tone={today ? "ultra" : "default"} className="flex items-center gap-4 p-5">
-                <div className={`grid size-12 shrink-0 place-items-center border-2 ${today ? "border-neon bg-neon text-void" : "border-edge text-lilac"}`}>
+                <div className={`grid size-12 shrink-0 place-items-center border-2 ${today ? "border-neon bg-neon text-bone" : "border-edge text-lilac"}`}>
                   <Dumbbell size={19} />
                 </div>
                 <div className="min-w-0 flex-1">

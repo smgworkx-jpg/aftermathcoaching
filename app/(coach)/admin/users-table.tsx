@@ -91,7 +91,7 @@ function Row({ user }: { user: AdminUser }) {
         <button
           onClick={toggleActive}
           disabled={pending}
-          className={`mono-label border-2 px-2.5 py-1.5 text-[.55rem] transition ${active ? "border-neon text-lilac hover:bg-neon hover:text-void" : "border-alert text-alert hover:bg-alert hover:text-void"}`}
+          className={`mono-label border-2 px-2.5 py-1.5 text-[.55rem] transition ${active ? "border-neon text-lilac hover:bg-neon hover:text-bone" : "border-alert text-alert hover:bg-alert hover:text-bone"}`}
         >
           {active ? "Active" : "Suspended"}
         </button>

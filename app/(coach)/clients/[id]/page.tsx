@@ -113,7 +113,7 @@ export default function ClientDetailPage() {
 
 function Quick({ icon: Icon, label }: { icon: typeof Dumbbell; label: string }) {
   return (
-    <button className="mono-label flex items-center justify-center gap-2 bg-coal p-4 text-lilac transition hover:bg-neon hover:text-void">
+    <button className="mono-label flex items-center justify-center gap-2 bg-coal p-4 text-lilac transition hover:bg-neon hover:text-bone">
       <Icon size={15} /> {label}
     </button>
   );

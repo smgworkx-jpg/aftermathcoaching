@@ -33,7 +33,7 @@ export default function WorkoutLoggerPage() {
         {workoutExercises.map((exercise, exerciseIndex) => (
           <section key={exercise.name} className="slab">
             <div className="flex items-center gap-3 border-b-2 border-edge p-4">
-              <div className="grid size-9 shrink-0 place-items-center border-2 border-neon bg-neon font-mono text-xs font-extrabold text-void">
+              <div className="grid size-9 shrink-0 place-items-center border-2 border-neon bg-neon font-mono text-xs font-extrabold text-bone">
                 {exerciseIndex + 1}
               </div>
               <div className="min-w-0 flex-1">
@@ -60,7 +60,7 @@ export default function WorkoutLoggerPage() {
                       onClick={() => setCompleted((state) => ({ ...state, [key]: !state[key] }))}
                       aria-label={`Mark set ${set} complete`}
                       aria-pressed={isDone}
-                      className={`grid h-12 place-items-center border-2 transition ${isDone ? "border-neon bg-neon text-void" : "border-edge text-ash hover:border-neon"}`}
+                      className={`grid h-12 place-items-center border-2 transition ${isDone ? "border-neon bg-neon text-bone" : "border-edge text-ash hover:border-neon"}`}
                     >
                       <Check size={16} strokeWidth={3} />
                     </button>

@@ -93,7 +93,7 @@ export default function CoachDashboard() {
             <div className="mt-5 space-y-4">
               {activity.map(([initials, text, time]) => (
                 <div key={text} className="flex items-center gap-3">
-                  <div className="grid size-8 shrink-0 place-items-center bg-neon font-mono text-[.55rem] font-extrabold text-void">
+                  <div className="grid size-8 shrink-0 place-items-center bg-neon font-mono text-[.55rem] font-extrabold text-bone">
                     {initials}
                   </div>
                   <div className="min-w-0 flex-1 text-xs text-bone">{text}</div>

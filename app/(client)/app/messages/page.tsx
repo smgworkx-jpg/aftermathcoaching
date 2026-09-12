@@ -15,7 +15,7 @@ export default function ClientMessagesPage() {
       <SectionHeader eyebrow="Direct coaching" title="Messages" description="One focused thread with your coach." />
       <Panel className="mx-auto max-w-3xl overflow-hidden">
         <div className="flex items-center gap-3 border-b-2 border-edge p-4">
-          <div className="grid size-10 shrink-0 place-items-center border-2 border-neon bg-neon font-mono text-[.62rem] font-extrabold text-void">
+          <div className="grid size-10 shrink-0 place-items-center border-2 border-neon bg-neon font-mono text-[.62rem] font-extrabold text-bone">
             AC
           </div>
           <div>

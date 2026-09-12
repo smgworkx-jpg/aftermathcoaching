@@ -47,7 +47,7 @@ export function AuthCallback() {
   if (!message) return null;
 
   return (
-    <div className="fixed inset-x-0 top-0 z-[60] border-b-2 border-neon bg-ultra px-4 py-3 text-center font-mono text-xs font-bold uppercase tracking-[.16em] text-void">
+    <div className="fixed inset-x-0 top-0 z-[60] border-b-2 border-neon bg-ultra px-4 py-3 text-center font-mono text-xs font-bold uppercase tracking-[.16em] text-bone">
       {message}
     </div>
   );

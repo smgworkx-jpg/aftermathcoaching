@@ -80,7 +80,7 @@ export default async function AdminPage() {
       <div className="mt-8 grid gap-6 xl:grid-cols-[1.55fr_.45fr]">
         <Panel className="overflow-hidden">
           <div className="flex items-center gap-3 border-b-2 border-edge p-5">
-            <div className="grid size-10 shrink-0 place-items-center border-2 border-neon bg-neon text-void">
+            <div className="grid size-10 shrink-0 place-items-center border-2 border-neon bg-neon text-bone">
               <UserCog size={18} />
             </div>
             <div>

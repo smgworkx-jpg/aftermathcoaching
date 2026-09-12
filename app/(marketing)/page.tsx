@@ -77,7 +77,7 @@ export default function HomePage() {
                     <div className="mono-label">Athlete console</div>
                     <div className="headline mt-1.5 text-3xl text-bone">Friday / Pull II</div>
                   </div>
-                  <div className="grid size-10 shrink-0 place-items-center border-2 border-neon bg-neon text-void">
+                  <div className="grid size-10 shrink-0 place-items-center border-2 border-neon bg-neon text-bone">
                     <Dumbbell size={18} />
                   </div>
                 </div>
@@ -217,12 +217,12 @@ export default function HomePage() {
       />
 
       {/* ---- Closing call: full-bleed purple block ---- */}
-      <section className="relative overflow-hidden bg-ultra px-4 py-20 text-void lg:px-8 lg:py-28">
+      <section className="relative overflow-hidden bg-ultra px-4 py-20 text-bone lg:px-8 lg:py-28">
         <div className="pointer-events-none absolute inset-0 opacity-20 stripes-bone" />
         <div className="relative mx-auto max-w-5xl text-center">
-          <div className="mono-label text-void/70">Applications open</div>
-          <h2 className="headline mt-4 text-[clamp(3rem,10vw,8rem)] text-void">Ready to cross the line?</h2>
-          <p className="mx-auto mt-5 max-w-xl leading-7 text-void/80">
+          <div className="mono-label text-bone/70">Applications open</div>
+          <h2 className="headline mt-4 text-[clamp(3rem,10vw,8rem)] text-bone">Ready to cross the line?</h2>
+          <p className="mx-auto mt-5 max-w-xl leading-7 text-bone/80">
             Send your numbers and your goal. If the fit is right, you get a plan built around your week — not someone
             else&apos;s.
           </p>

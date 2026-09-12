@@ -50,7 +50,7 @@ export default function ClientDashboard() {
                   key={habit.name}
                   className={`flex items-center gap-3 border-2 p-4 text-left transition ${habit.complete ? "border-neon bg-ultra/25" : "border-edge bg-void hover:border-neon/50"}`}
                 >
-                  <span className={`grid size-6 shrink-0 place-items-center border-2 ${habit.complete ? "border-neon bg-neon text-void" : "border-edge text-transparent"}`}>
+                  <span className={`grid size-6 shrink-0 place-items-center border-2 ${habit.complete ? "border-neon bg-neon text-bone" : "border-edge text-transparent"}`}>
                     <Check size={13} strokeWidth={3} />
                   </span>
                   <span className="min-w-0">
@@ -97,7 +97,7 @@ export default function ClientDashboard() {
 
           <Link href="/app/messages">
             <Panel lift className="flex items-center gap-4 p-5">
-              <div className="grid size-11 shrink-0 place-items-center border-2 border-neon bg-neon text-void">
+              <div className="grid size-11 shrink-0 place-items-center border-2 border-neon bg-neon text-bone">
                 <MessageSquare size={18} />
               </div>
               <div className="min-w-0 flex-1">

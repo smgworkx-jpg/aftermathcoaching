@@ -29,7 +29,7 @@ export default function ClientsPage() {
               className={`slab slab-lift grid gap-4 p-5 md:grid-cols-[1.5fr_1fr_.7fr_.8fr] md:items-center ${client.status === "attention" ? "slab-alert" : ""}`}
             >
               <div className="flex items-center gap-4">
-                <div className="grid size-12 shrink-0 place-items-center border-2 border-neon bg-neon font-mono text-xs font-extrabold text-void">
+                <div className="grid size-12 shrink-0 place-items-center border-2 border-neon bg-neon font-mono text-xs font-extrabold text-bone">
                   {client.name.split(" ").map((part) => part[0]).join("")}
                 </div>
                 <div className="min-w-0">
