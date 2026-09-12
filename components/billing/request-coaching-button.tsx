@@ -73,22 +73,21 @@ export function RequestCoachingButton({ className, children }: Props) {
 
       {open && (
         <div
-          className="fixed inset-0 z-[70] flex items-start justify-center overflow-y-auto overscroll-contain bg-black/80 p-4 backdrop-blur-sm sm:items-center"
+          className="fixed inset-0 z-[70] overflow-y-auto overscroll-contain bg-black/80 p-4 backdrop-blur-sm"
           onClick={() => !sending && setOpen(false)}
         >
+          <div className="flex min-h-full items-center justify-center py-6">
             <div
-              className="relative my-auto flex max-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col border border-violet-400/25 bg-[#11131a]/95 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl"
+              className="relative w-full max-w-2xl border border-violet-400/25 bg-[#11131a]/95 p-7 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl md:p-9"
               onClick={(e) => e.stopPropagation()}
             >
-            <button
-              className="absolute right-4 top-4 z-10 text-slate-500 transition hover:text-white"
-              onClick={() => !sending && setOpen(false)}
-              aria-label="Close"
-            >
-              <X size={20} />
-            </button>
-
-            <div className="overflow-y-auto overscroll-contain p-7 md:p-9">
+              <button
+                className="absolute right-4 top-4 text-slate-500 transition hover:text-white"
+                onClick={() => !sending && setOpen(false)}
+                aria-label="Close"
+              >
+                <X size={20} />
+              </button>
             {done ? (
               <div className="py-6 text-center">
                 <div className="eyebrow">Request received</div>
@@ -209,7 +208,7 @@ export function RequestCoachingButton({ className, children }: Props) {
               </>
             )}
             </div>
-            </div>
+          </div>
         </div>
       )}
     </>
