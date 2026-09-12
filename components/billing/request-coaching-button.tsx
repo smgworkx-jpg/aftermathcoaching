@@ -62,8 +62,7 @@ export function RequestCoachingButton({ className, children }: Props) {
     }
   }
 
-  const field =
-    "field-input w-full";
+  const field = "field-input w-full";
 
   return (
     <>
@@ -73,16 +72,16 @@ export function RequestCoachingButton({ className, children }: Props) {
 
       {open && (
         <div
-          className="fixed inset-0 z-[70] overflow-y-auto overscroll-contain bg-black/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[70] overflow-y-auto overscroll-contain bg-black/80 p-3 backdrop-blur-sm sm:p-4"
           onClick={() => !sending && setOpen(false)}
         >
-          <div className="flex min-h-full items-center justify-center py-6">
+          <div className="flex min-h-full items-center justify-center">
             <div
-              className="relative w-full max-w-2xl border border-violet-400/25 bg-[#11131a]/95 p-7 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl md:p-9"
+              className="dialog-fit relative w-full max-w-3xl border border-violet-400/25 bg-[#11131a]/95 p-5 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl sm:p-7 md:p-8"
               onClick={(e) => e.stopPropagation()}
             >
               <button
-                className="absolute right-4 top-4 text-slate-500 transition hover:text-white"
+                className="absolute right-3 top-3 text-slate-500 transition hover:text-white"
                 onClick={() => !sending && setOpen(false)}
                 aria-label="Close"
               >
@@ -105,14 +104,14 @@ export function RequestCoachingButton({ className, children }: Props) {
             ) : (
               <>
                 <div className="eyebrow">Coaching application</div>
-                <h2 className="mt-3 font-display text-3xl font-bold uppercase">Request coaching</h2>
-                <p className="mt-2 text-sm leading-6 text-slate-500">
+                <h2 className="mt-2 font-display text-2xl font-bold uppercase md:text-3xl">Request coaching</h2>
+                <p className="dialog-blurb mt-2 pr-8 text-sm leading-6 text-slate-500">
                   Tell us where you&apos;re starting from and create your account in one step. Everything is reviewed
                   personally — no bots, no auto-approval.
                 </p>
 
-                <form className="mt-7 space-y-4" onSubmit={submit}>
-                  <label className="field-label block">
+                <form className="mt-5 grid grid-cols-1 items-end gap-4 sm:grid-cols-6" onSubmit={submit}>
+                  <label className="field-label block sm:col-span-3">
                     Name
                     <input
                       className={field}
@@ -121,7 +120,7 @@ export function RequestCoachingButton({ className, children }: Props) {
                       onChange={(e) => setForm({ ...form, name: e.target.value })}
                     />
                   </label>
-                  <label className="field-label block">
+                  <label className="field-label block sm:col-span-3">
                     Email
                     <input
                       className={field}
@@ -132,8 +131,8 @@ export function RequestCoachingButton({ className, children }: Props) {
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
                     />
                   </label>
-                  <label className="field-label block">
-                    Choose a password
+                  <label className="field-label block sm:col-span-3">
+                    Password
                     <input
                       className={field}
                       type="password"
@@ -145,45 +144,43 @@ export function RequestCoachingButton({ className, children }: Props) {
                       onChange={(e) => setForm({ ...form, password: e.target.value })}
                     />
                   </label>
-                  <div className="grid gap-4 sm:grid-cols-3">
-                    <label className="field-label block">
-                      Age
-                      <input
-                        className={field}
-                        type="number"
-                        min={13}
-                        max={100}
-                        placeholder="28"
-                        value={form.age}
-                        onChange={(e) => setForm({ ...form, age: e.target.value })}
-                      />
-                    </label>
-                    <label className="field-label block">
-                      Bodyweight
-                      <input
-                        className={field}
-                        type="number"
-                        step="0.1"
-                        min={0}
-                        placeholder="kg"
-                        value={form.bodyweight}
-                        onChange={(e) => setForm({ ...form, bodyweight: e.target.value })}
-                      />
-                    </label>
-                    <label className="field-label block">
-                      Sex
-                      <select
-                        className={field}
-                        value={form.sex}
-                        onChange={(e) => setForm({ ...form, sex: e.target.value })}
-                      >
-                        <option value="">Select…</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </label>
-                  </div>
-                  <label className="field-label block">
+                  <label className="field-label block sm:col-span-1">
+                    Age
+                    <input
+                      className={field}
+                      type="number"
+                      min={13}
+                      max={100}
+                      placeholder="28"
+                      value={form.age}
+                      onChange={(e) => setForm({ ...form, age: e.target.value })}
+                    />
+                  </label>
+                  <label className="field-label block sm:col-span-1">
+                    Weight
+                    <input
+                      className={field}
+                      type="number"
+                      step="0.1"
+                      min={0}
+                      placeholder="kg"
+                      value={form.bodyweight}
+                      onChange={(e) => setForm({ ...form, bodyweight: e.target.value })}
+                    />
+                  </label>
+                  <label className="field-label block sm:col-span-1">
+                    Sex
+                    <select
+                      className={field}
+                      value={form.sex}
+                      onChange={(e) => setForm({ ...form, sex: e.target.value })}
+                    >
+                      <option value="">—</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                    </select>
+                  </label>
+                  <label className="field-label block sm:col-span-6">
                     Goals
                     <textarea
                       className={field}
@@ -194,16 +191,20 @@ export function RequestCoachingButton({ className, children }: Props) {
                     />
                   </label>
 
-                  {error && <p className="border border-fuchsia-400/20 bg-fuchsia-500/10 p-3 text-sm text-fuchsia-200">{error}</p>}
+                  {error && (
+                    <p className="border border-fuchsia-400/20 bg-fuchsia-500/10 p-3 text-sm text-fuchsia-200 sm:col-span-6">
+                      {error}
+                    </p>
+                  )}
 
-                  <div className="pt-2">
+                  <div className="sm:col-span-6">
                     <Button className="w-full" disabled={sending || !form.goals.trim() || !form.email.trim() || form.password.length < 8}>
                       {sending ? "Sending…" : "Submit application"}
                     </Button>
+                    <p className="dialog-note mt-3 text-center text-[11px] text-slate-600">
+                      No payment to apply · Your account is created instantly with the client role
+                    </p>
                   </div>
-                  <p className="text-center text-[11px] text-slate-600">
-                    No payment to apply · Your account is created instantly with the client role
-                  </p>
                 </form>
               </>
             )}
