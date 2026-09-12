@@ -45,6 +45,9 @@ button, a { -webkit-tap-highlight-color: transparent; }
 .field-label > span { color: #c084fc; font-size: .7rem; font-weight: 500; letter-spacing: 0; text-transform: none; }
 .field-input { height: 3rem; width: 100%; border: 1px solid rgba(255,255,255,.09); background: rgba(255,255,255,.035); padding: 0 .9rem; color: white; outline: none; transition: .2s; text-transform: none; letter-spacing: 0; font-weight: 400; }
 .field-input:focus { border-color: rgba(168,85,247,.65); box-shadow: 0 0 0 3px rgba(139,92,246,.1); }
+select.field-input { appearance: auto; padding-right: 2rem; }
+select.field-input option { background: #11131a; color: white; }
+textarea.field-input { height: auto; min-height: 7rem; padding: .8rem .9rem; }
 .eyebrow { font-size: .65rem; font-weight: 800; text-transform: uppercase; letter-spacing: .32em; color: #c084fc; }
 .hairline { height: 1px; background: linear-gradient(90deg, transparent, rgba(168,85,247,.5), transparent); }
 @keyframes rise { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }

@@ -77,7 +77,7 @@ export function RequestCoachingButton({ className, children }: Props) {
           onClick={() => !sending && setOpen(false)}
         >
             <div
-              className="relative my-auto flex max-h-[calc(100vh-2rem)] w-full max-w-lg flex-col border border-violet-400/25 bg-[#11131a]/95 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl"
+              className="relative my-auto flex max-h-[calc(100vh-2rem)] w-full max-w-2xl flex-col border border-violet-400/25 bg-[#11131a]/95 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl"
               onClick={(e) => e.stopPropagation()}
             >
             <button
@@ -160,18 +160,6 @@ export function RequestCoachingButton({ className, children }: Props) {
                       />
                     </label>
                     <label className="field-label block">
-                      Sex
-                      <select
-                        className={field}
-                        value={form.sex}
-                        onChange={(e) => setForm({ ...form, sex: e.target.value })}
-                      >
-                        <option value="">Select</option>
-                        <option value="male">Male</option>
-                        <option value="female">Female</option>
-                      </select>
-                    </label>
-                    <label className="field-label block">
                       Bodyweight
                       <input
                         className={field}
@@ -183,11 +171,23 @@ export function RequestCoachingButton({ className, children }: Props) {
                         onChange={(e) => setForm({ ...form, bodyweight: e.target.value })}
                       />
                     </label>
+                    <label className="field-label block">
+                      Sex
+                      <select
+                        className={field}
+                        value={form.sex}
+                        onChange={(e) => setForm({ ...form, sex: e.target.value })}
+                      >
+                        <option value="">Select…</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                      </select>
+                    </label>
                   </div>
                   <label className="field-label block">
                     Goals
                     <textarea
-                      className={`${field} min-h-24 resize-y`}
+                      className={field}
                       required
                       placeholder="What do you want to achieve? Timeline, past training, injuries, anything relevant."
                       value={form.goals}
