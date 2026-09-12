@@ -1,18 +1,21 @@
 import { db } from "../../db";
 import { coachingRequests } from "../../db/schema";
-import { getUser } from "@netlify/identity";
+import { getUser, admin, AuthError } from "@netlify/identity";
 
-// Receives coaching applications from the public pricing page popup and stores
-// them in the coaching_requests table. Fields other than goals are optional;
-// signed-in visitors are linked to their Identity account when available.
+// Receives coaching applications from the public pricing page popup, stores
+// them in the coaching_requests table, and provisions a Netlify Identity
+// account (default `client` role via the identity event function) so the
+// applicant can sign in immediately. If the email already has an account, the
+// application is still saved and linked to that existing user — no error is
+// shown for duplicates, and no information about account existence leaks.
 type Payload = {
   name?: string;
-  email?: string;
+  email: string;
+  password: string;
   age?: number;
   sex?: string;
   bodyweightKg?: number;
-  goals?: string;
-  identityId?: string;
+  goals: string;
 };
 
 const handler = async (req: Request) => {
@@ -28,14 +31,22 @@ const handler = async (req: Request) => {
   }
 
   const goals = payload.goals?.trim();
+  const email = payload.email?.trim().toLowerCase();
+  const password = payload.password;
+
   if (!goals) {
     return Response.json({ error: "Tell us your goals so the coach can review your application." }, { status: 400 });
+  }
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    return Response.json({ error: "A valid email address is required." }, { status: 400 });
+  }
+  if (!password || password.length < 8) {
+    return Response.json({ error: "A password of at least 8 characters is required." }, { status: 400 });
   }
 
   const age = Number(payload.age);
   const bodyweight = Number(payload.bodyweightKg);
   const sex = payload.sex?.toLowerCase();
-  const email = payload.email?.trim();
 
   if (payload.age !== undefined && (!Number.isFinite(age) || age < 13 || age > 100)) {
     return Response.json({ error: "Age must be between 13 and 100." }, { status: 400 });
@@ -46,33 +57,57 @@ const handler = async (req: Request) => {
   if (sex && !["male", "female"].includes(sex)) {
     return Response.json({ error: "Invalid selection." }, { status: 400 });
   }
-  if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-    return Response.json({ error: "That email address doesn't look right." }, { status: 400 });
-  }
 
-  // Link the request to the visitor's Identity account when they happen to be
-  // signed in; anonymous applications are fine too.
+  // Link the request to the visitor's existing Identity account when they
+  // happen to be signed in.
   const user = await getUser().catch(() => null);
 
-  try {
-    const [row] = await db
-      .insert(coachingRequests)
-      .values({
-        name: payload.name?.trim() || user?.name || null,
-        email: email || user?.email || null,
-        age: payload.age !== undefined ? age : null,
-        sex: sex || null,
-        bodyweightKg: payload.bodyweightKg !== undefined ? bodyweight : null,
-        goals,
-        identityId: user?.id ?? null,
-      })
-      .returning({ id: coachingRequests.id });
+  let applicationSaved = false;
 
-    return Response.json({ ok: true, id: row.id });
+  try {
+    await db.insert(coachingRequests).values({
+      name: payload.name?.trim() || user?.name || null,
+      email: email || user?.email || null,
+      age: payload.age !== undefined ? age : null,
+      sex: sex || null,
+      bodyweightKg: payload.bodyweightKg !== undefined ? bodyweight : null,
+      goals,
+      identityId: user?.id ?? null,
+    });
+    applicationSaved = true;
   } catch (err) {
     console.error("coaching-request insert failed:", err);
     return Response.json({ error: "Could not save the request. Please try again." }, { status: 500 });
   }
+
+  // Provision the account. An existing account for the same email is treated as
+  // success: the applicant simply signs in with their existing password.
+  let accountCreated = false;
+  try {
+    const created = await admin.createUser({
+      email,
+      password,
+      data: {
+        user_metadata: payload.name?.trim() ? { full_name: payload.name.trim() } : undefined,
+      },
+    });
+    accountCreated = Boolean(created?.id);
+  } catch (err) {
+    const duplicate =
+      err instanceof AuthError && (err.status === 422 || /already registered/i.test(err.message));
+    if (!duplicate) {
+      console.error("identity account creation failed:", err);
+      // The application itself was saved; don't fail the whole submission over
+      // account provisioning. The coach can resolve accounts manually.
+      return Response.json({
+        ok: true,
+        accountCreated: false,
+        warning: "Application received, but the account could not be created automatically.",
+      });
+    }
+  }
+
+  return Response.json({ ok: applicationSaved, accountCreated });
 };
 
 export default handler;

@@ -9,15 +9,16 @@ type Props = {
   children: React.ReactNode;
 };
 
-// Opens a modal that collects the applicant's stats before anything is charged
-// or any account is created. The submission is stored in the coaching_requests
-// table for the coach to review.
+// Opens a modal that collects the applicant's stats and creates their account
+// (email + password) at the same time. Nothing is charged; the application is
+// stored in the coaching_requests table and the Identity account gets the
+// default `client` role, so the athlete can sign in immediately.
 export function RequestCoachingButton({ className, children }: Props) {
   const [open, setOpen] = useState(false);
   const [sending, setSending] = useState(false);
-  const [done, setDone] = useState(false);
+  const [done, setDone] = useState<null | { accountCreated: boolean }>(null);
   const [error, setError] = useState("");
-  const [form, setForm] = useState({ name: "", email: "", age: "", sex: "", bodyweight: "", goals: "" });
+  const [form, setForm] = useState({ name: "", email: "", password: "", age: "", sex: "", bodyweight: "", goals: "" });
 
   useEffect(() => {
     if (!open) return;
@@ -32,6 +33,10 @@ export function RequestCoachingButton({ className, children }: Props) {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
+    if (form.password.length < 8) {
+      setError("Password must be at least 8 characters.");
+      return;
+    }
     setSending(true);
     setError("");
     try {
@@ -40,7 +45,8 @@ export function RequestCoachingButton({ className, children }: Props) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           name: form.name || undefined,
-          email: form.email || undefined,
+          email: form.email,
+          password: form.password,
           age: form.age ? Number(form.age) : undefined,
           sex: form.sex || undefined,
           bodyweightKg: form.bodyweight ? Number(form.bodyweight) : undefined,
@@ -52,7 +58,7 @@ export function RequestCoachingButton({ className, children }: Props) {
         setError(data.error ?? "Could not send the request. Please try again.");
         return;
       }
-      setDone(true);
+      setDone({ accountCreated: Boolean(data.accountCreated) });
     } catch {
       setError("Network error. Please try again.");
     } finally {
@@ -65,7 +71,7 @@ export function RequestCoachingButton({ className, children }: Props) {
 
   return (
     <>
-      <button className={className} onClick={() => { setOpen(true); setDone(false); setError(""); }}>
+      <button className={className} onClick={() => { setOpen(true); setDone(null); setError(""); }}>
         {children}
       </button>
 
@@ -91,10 +97,12 @@ export function RequestCoachingButton({ className, children }: Props) {
                 <div className="eyebrow">Request received</div>
                 <h2 className="mt-3 font-display text-3xl font-bold uppercase">You&apos;re on the list</h2>
                 <p className="mt-4 text-sm leading-6 text-slate-400">
-                  Your application is in review. If it&apos;s a fit, your coach reaches out personally with next steps
-                  and enrollment details.
+                  {done.accountCreated
+                    ? "Your application is in review and your account is ready. Sign in with your email and password to explore the athlete portal while you wait."
+                    : "Your application is in review. An account with this email already exists — sign in with your existing password to explore the athlete portal."}
                 </p>
-                <div className="mt-8">
+                <div className="mt-8 flex justify-center gap-3">
+                  <Button onClick={() => { setOpen(false); window.location.assign("/login"); }}>Sign in</Button>
                   <Button variant="secondary" onClick={() => setOpen(false)}>Close</Button>
                 </div>
               </div>
@@ -103,7 +111,8 @@ export function RequestCoachingButton({ className, children }: Props) {
                 <div className="eyebrow">Coaching application</div>
                 <h2 className="mt-3 font-display text-3xl font-bold uppercase">Request coaching</h2>
                 <p className="mt-2 text-sm leading-6 text-slate-500">
-                  Tell us where you&apos;re starting from. Everything is reviewed personally — no bots, no auto-approval.
+                  Tell us where you&apos;re starting from and create your account in one step. Everything is reviewed
+                  personally — no bots, no auto-approval.
                 </p>
 
                 <form className="mt-7 space-y-4" onSubmit={submit}>
@@ -122,8 +131,22 @@ export function RequestCoachingButton({ className, children }: Props) {
                       className={field}
                       type="email"
                       autoComplete="email"
+                      required
                       value={form.email}
                       onChange={(e) => setForm({ ...form, email: e.target.value })}
+                    />
+                  </label>
+                  <label className="field-label block">
+                    Choose a password
+                    <input
+                      className={field}
+                      type="password"
+                      autoComplete="new-password"
+                      required
+                      minLength={8}
+                      placeholder="At least 8 characters"
+                      value={form.password}
+                      onChange={(e) => setForm({ ...form, password: e.target.value })}
                     />
                   </label>
                   <div className="grid gap-4 sm:grid-cols-3">
@@ -178,12 +201,12 @@ export function RequestCoachingButton({ className, children }: Props) {
                   {error && <p className="border border-fuchsia-400/20 bg-fuchsia-500/10 p-3 text-sm text-fuchsia-200">{error}</p>}
 
                   <div className="pt-2">
-                    <Button className="w-full" disabled={sending || !form.goals.trim()}>
+                    <Button className="w-full" disabled={sending || !form.goals.trim() || !form.email.trim() || form.password.length < 8}>
                       {sending ? "Sending…" : "Submit application"}
                     </Button>
                   </div>
                   <p className="text-center text-[11px] text-slate-600">
-                    No payment and no account required to apply.
+                    No payment to apply · Your account is created instantly with the client role
                   </p>
                 </form>
               </>
