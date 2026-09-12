@@ -24,11 +24,7 @@ export function RequestCoachingButton({ className, children }: Props) {
     if (!open) return;
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
+    return () => document.removeEventListener("keydown", onKey);
   }, [open]);
 
   async function submit(e: React.FormEvent) {
@@ -77,13 +73,14 @@ export function RequestCoachingButton({ className, children }: Props) {
 
       {open && (
         <div
-          className="fixed inset-0 z-[70] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm"
+          className="fixed inset-0 z-[70] overflow-y-auto overscroll-contain bg-black/80 p-4 backdrop-blur-sm"
           onClick={() => !sending && setOpen(false)}
         >
-          <div
-            className="relative max-h-[90vh] w-full max-w-lg overflow-y-auto border border-violet-400/25 bg-[#11131a]/95 p-7 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl md:p-9"
-            onClick={(e) => e.stopPropagation()}
-          >
+          <div className="flex min-h-full items-center justify-center">
+            <div
+              className="relative w-full max-w-lg border border-violet-400/25 bg-[#11131a]/95 p-7 shadow-[0_0_80px_rgba(139,92,246,.2)] backdrop-blur-xl md:p-9"
+              onClick={(e) => e.stopPropagation()}
+            >
             <button
               className="absolute right-4 top-4 text-slate-500 transition hover:text-white"
               onClick={() => !sending && setOpen(false)}
@@ -211,6 +208,7 @@ export function RequestCoachingButton({ className, children }: Props) {
                 </form>
               </>
             )}
+            </div>
           </div>
         </div>
       )}
