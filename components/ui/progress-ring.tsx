@@ -1,11 +1,20 @@
+// A segmented block meter — the brutalist stand-in for a progress ring. Ten
+// hard cells fill from the left; the count and label sit underneath.
 export function ProgressRing({ value, label }: { value: number; label: string }) {
+  const filled = Math.round(Math.min(Math.max(value, 0), 100) / 10);
   return (
-    <div
-      className="grid size-24 place-items-center rounded-full"
-      style={{ background: `conic-gradient(#a855f7 ${value * 3.6}deg, rgba(255,255,255,.07) 0deg)` }}
-    >
-      <div className="grid size-20 place-items-center rounded-full bg-[#11131a] text-center">
-        <div><strong className="block text-xl text-white">{value}%</strong><span className="text-[10px] uppercase tracking-[.2em] text-slate-500">{label}</span></div>
+    <div className="min-w-28">
+      <div className="flex items-end justify-between gap-2">
+        <span className="font-display text-3xl leading-none text-bone">{value}%</span>
+        <span className="mono-label pb-0.5">{label}</span>
+      </div>
+      <div className="mt-2 flex gap-1">
+        {Array.from({ length: 10 }).map((_, index) => (
+          <span
+            key={index}
+            className={`h-4 flex-1 border ${index < filled ? "border-neon bg-neon" : "border-edge bg-void"}`}
+          />
+        ))}
       </div>
     </div>
   );

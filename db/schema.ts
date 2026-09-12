@@ -366,3 +366,20 @@ export const coachNotes = pgTable("coach_notes", {
   body: text("body").notNull(),
   ...timestamps,
 });
+
+export const coachingRequests = pgTable(
+  "coaching_requests",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    name: text("name"),
+    email: text("email"),
+    age: integer("age"),
+    sex: text("sex"),
+    bodyweightKg: decimal("bodyweight_kg", { precision: 6, scale: 2 }),
+    goals: text("goals").notNull(),
+    status: text("status").default("new").notNull(),
+    identityId: text("identity_id"),
+    ...timestamps,
+  },
+  (table) => [index("coaching_requests_status_idx").on(table.status, table.createdAt)],
+);

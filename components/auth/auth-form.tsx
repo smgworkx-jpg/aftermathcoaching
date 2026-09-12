@@ -65,12 +65,38 @@ export function AuthForm({ mode }: { mode: "login" | "signup" }) {
 
   return (
     <form className="mt-8 space-y-5" onSubmit={handleSubmit(onSubmit)}>
-      {mode === "signup" && <label className="field-label">Full name<input className="field-input" autoComplete="name" {...register("name")} />{errors.name && <span>{errors.name.message}</span>}</label>}
-      <label className="field-label">Email address<input className="field-input" type="email" autoComplete="email" {...register("email")} />{errors.email && <span>{errors.email.message}</span>}</label>
-      <label className="field-label">Password<input className="field-input" type="password" autoComplete={mode === "login" ? "current-password" : "new-password"} {...register("password")} />{errors.password && <span>{errors.password.message}</span>}</label>
-      {message && <p className="border border-violet-400/20 bg-violet-500/10 p-3 text-sm text-violet-200">{message}</p>}
-      <Button className="w-full" disabled={isSubmitting}>{isSubmitting ? "Authenticating…" : mode === "login" ? "Enter command center" : "Create client account"}</Button>
-      <p className="text-center text-sm text-slate-500">{mode === "login" ? "New to Blacklinez?" : "Already enrolled?"} <Link className="text-violet-300 hover:text-violet-200" href={mode === "login" ? "/signup" : "/login"}>{mode === "login" ? "Apply for coaching" : "Sign in"}</Link></p>
+      {mode === "signup" && (
+        <label className="field-label">
+          Full name
+          <input className="field-input" autoComplete="name" {...register("name")} />
+          {errors.name && <span>{errors.name.message}</span>}
+        </label>
+      )}
+      <label className="field-label">
+        Email address
+        <input className="field-input" type="email" autoComplete="email" {...register("email")} />
+        {errors.email && <span>{errors.email.message}</span>}
+      </label>
+      <label className="field-label">
+        Password
+        <input
+          className="field-input"
+          type="password"
+          autoComplete={mode === "login" ? "current-password" : "new-password"}
+          {...register("password")}
+        />
+        {errors.password && <span>{errors.password.message}</span>}
+      </label>
+      {message && <p className="slab slab-ultra slab-tight p-3 text-sm leading-6 text-lilac">{message}</p>}
+      <Button className="w-full" disabled={isSubmitting}>
+        {isSubmitting ? "Authenticating" : mode === "login" ? "Enter the console" : "Create account"}
+      </Button>
+      <p className="mono-label text-center leading-5">
+        {mode === "login" ? "No account yet?" : "Already enrolled?"}{" "}
+        <Link className="text-lilac underline decoration-neon decoration-2 underline-offset-4 hover:text-bone" href={mode === "login" ? "/signup" : "/login"}>
+          {mode === "login" ? "Apply for coaching" : "Sign in"}
+        </Link>
+      </p>
     </form>
   );
 }

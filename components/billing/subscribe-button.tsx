@@ -36,7 +36,7 @@ export function SubscribeButton({ className, children }: { className?: string; c
       <button className={className} onClick={start} disabled={loading}>
         {loading ? "Redirecting…" : children}
       </button>
-      {message && <p className="mt-3 text-center text-xs text-fuchsia-300">{message}</p>}
+      {message && <p className="mono-label mt-3 text-center text-[.55rem] text-alert">{message}</p>}
     </>
   );
 }

@@ -1,29 +1,93 @@
-import Link from "next/link";
 import type { LucideIcon } from "lucide-react";
-import { Bell, Command, Search } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { BrandMark } from "@/components/brand-mark";
 import { SignOutButton } from "@/components/auth/sign-out-button";
+import { NavLink } from "@/components/layout/nav-link";
 
 export type NavItem = { href: string; label: string; icon: LucideIcon };
 
-export function AppShell({ children, nav, label, person }: { children: React.ReactNode; nav: NavItem[]; label: string; person: string }) {
+export function AppShell({
+  children,
+  nav,
+  label,
+  person,
+}: {
+  children: React.ReactNode;
+  nav: NavItem[];
+  label: string;
+  person: string;
+}) {
+  const initials = person.split(" ").map((part) => part[0]).join("").slice(0, 2).toUpperCase();
+
   return (
     <div className="min-h-screen bg-app">
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 border-r border-white/[.06] bg-[#0b0c11]/90 p-5 backdrop-blur-xl lg:flex lg:flex-col">
-        <BrandMark />
-        <div className="mt-10 px-3 text-[10px] font-bold uppercase tracking-[.3em] text-slate-600">{label}</div>
-        <nav className="mt-4 flex-1 space-y-1">{nav.map(({ href, label: navLabel, icon: Icon }, index) => <Link key={href} className={`group flex items-center gap-3 px-3 py-2.5 text-sm transition ${index === 0 ? "nav-active text-white" : "text-slate-500 hover:bg-white/[.03] hover:text-white"}`} href={href}><Icon size={17} className={index === 0 ? "text-violet-300" : "group-hover:text-violet-300"} />{navLabel}</Link>)}</nav>
-        <div className="border-t border-white/[.06] pt-4"><SignOutButton /></div>
+      <div className="fixed inset-x-0 top-0 z-50 h-1.5 stripes-tight" />
+
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r-2 border-edge bg-coal pt-1.5 lg:flex">
+        <div className="border-b-2 border-edge p-5">
+          <BrandMark />
+        </div>
+        <div className="mono-label px-5 py-4 text-lilac">{label}</div>
+        <nav className="flex-1 space-y-1 overflow-y-auto px-3 pb-4">
+          {nav.map(({ href, label: navLabel, icon: Icon }) => (
+            <NavLink
+              key={href}
+              href={href}
+              className="group flex items-center gap-3 border-2 px-3 py-2.5 font-mono text-[.68rem] font-bold uppercase tracking-[.14em] transition"
+              activeClassName="border-neon bg-neon text-void shadow-[4px_4px_0_0_#2a1150]"
+              idleClassName="border-transparent text-ash hover:border-edge hover:bg-slab hover:text-bone"
+            >
+              <Icon size={16} className="shrink-0" />
+              <span className="truncate">{navLabel}</span>
+            </NavLink>
+          ))}
+        </nav>
+        <div className="border-t-2 border-edge p-3">
+          <SignOutButton />
+        </div>
       </aside>
+
       <div className="lg:pl-64">
-        <header className="sticky top-0 z-30 flex h-18 items-center justify-between border-b border-white/[.06] bg-[#09090d]/75 px-5 backdrop-blur-xl lg:px-8">
-          <div className="flex items-center gap-3 lg:hidden"><BrandMark compact /><span className="font-display text-sm font-bold uppercase tracking-[.16em] text-white">Blacklinez</span></div>
-          <div className="hidden max-w-md flex-1 items-center gap-3 border border-white/[.07] bg-white/[.025] px-4 py-2 text-slate-600 lg:flex"><Search size={16} /><span className="text-sm">Search clients, programs, exercises…</span><kbd className="ml-auto flex items-center gap-1 text-[10px]"><Command size={11} /> K</kbd></div>
-          <div className="ml-auto flex items-center gap-4"><button className="relative text-slate-400"><Bell size={19} /><span className="absolute -right-0.5 -top-0.5 size-1.5 rounded-full bg-violet-400 shadow-[0_0_10px_#a855f7]" /></button><div className="h-7 w-px bg-white/[.08]" /><div className="text-right"><div className="text-xs font-semibold text-white">{person}</div><div className="text-[10px] uppercase tracking-[.14em] text-violet-300">{label}</div></div><div className="grid size-9 place-items-center border border-violet-400/30 bg-violet-500/10 text-xs font-bold text-violet-200">{person.split(" ").map((part) => part[0]).join("")}</div></div>
+        <header className="sticky top-0 z-30 mt-1.5 flex h-16 items-center gap-4 border-b-2 border-edge bg-void/92 px-4 backdrop-blur lg:h-20 lg:px-8">
+          <div className="lg:hidden">
+            <BrandMark compact />
+          </div>
+          <div className="hidden max-w-sm flex-1 items-center gap-3 border-2 border-edge bg-coal px-4 py-2.5 text-ash lg:flex">
+            <Search size={15} className="shrink-0" />
+            <span className="mono-label truncate">Search everything</span>
+            <kbd className="mono-label ml-auto border border-edge px-1.5 py-0.5 text-[.55rem] text-lilac">⌘K</kbd>
+          </div>
+          <div className="ml-auto flex items-center gap-3 lg:gap-5">
+            <button className="relative text-ash transition hover:text-bone" aria-label="Notifications">
+              <Bell size={18} />
+              <span className="absolute -right-1 -top-1 size-2 bg-alert" />
+            </button>
+            <div className="hidden text-right sm:block">
+              <div className="font-display text-sm uppercase tracking-wide text-bone">{person}</div>
+              <div className="mono-label text-[.55rem] text-lilac">{label}</div>
+            </div>
+            <div className="grid size-10 place-items-center border-2 border-neon bg-neon font-mono text-xs font-extrabold text-void">
+              {initials}
+            </div>
+          </div>
         </header>
-        <main className="mx-auto max-w-[1600px] p-5 pb-24 lg:p-8">{children}</main>
+        <main className="mx-auto max-w-[1600px] p-4 pb-28 lg:p-8 lg:pb-14">{children}</main>
       </div>
-      <nav className="fixed inset-x-3 bottom-3 z-50 flex justify-around border border-white/[.08] bg-[#11131a]/95 p-2 shadow-2xl backdrop-blur-xl lg:hidden">{nav.slice(0, 5).map(({ href, label: navLabel, icon: Icon }, index) => <Link key={href} className={`flex min-w-14 flex-col items-center gap-1 px-2 py-1 text-[9px] uppercase tracking-wide ${index === 0 ? "text-violet-300" : "text-slate-500"}`} href={href}><Icon size={18} />{navLabel}</Link>)}</nav>
+
+      <nav className="fixed inset-x-0 bottom-0 z-50 flex justify-around border-t-2 border-edge bg-coal px-1 py-1.5 lg:hidden">
+        {nav.slice(0, 5).map(({ href, label: navLabel, icon: Icon }) => (
+          <NavLink
+            key={href}
+            href={href}
+            className="flex min-w-0 flex-1 flex-col items-center gap-1 border-2 px-1 py-1.5 font-mono text-[.5rem] font-bold uppercase tracking-[.1em] transition"
+            activeClassName="border-neon bg-neon text-void"
+            idleClassName="border-transparent text-ash"
+          >
+            <Icon size={17} />
+            <span className="w-full truncate text-center">{navLabel}</span>
+          </NavLink>
+        ))}
+      </nav>
     </div>
   );
 }

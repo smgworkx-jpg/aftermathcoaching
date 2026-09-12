@@ -2,7 +2,58 @@ import Link from "next/link";
 import { Filter, Plus, Search } from "lucide-react";
 import { SectionHeader } from "@/components/layout/section-header";
 import { Button } from "@/components/ui/button";
-import { Panel } from "@/components/ui/panel";
 import { clients } from "@/lib/demo-data";
 
-export default function ClientsPage() { return <><SectionHeader eyebrow="Roster management" title="Clients" description="A single view of each athlete's phase, adherence, and next coaching action." action={<Button><Plus size={16}/> Invite client</Button>}/><div className="mb-4 flex gap-3"><div className="flex flex-1 items-center gap-3 border border-white/[.07] bg-white/[.025] px-4 py-3 text-slate-600"><Search size={16}/><span className="text-sm">Search athletes…</span></div><Button variant="secondary"><Filter size={16}/> Filter</Button></div><Panel className="overflow-hidden"><div className="hidden grid-cols-[1.4fr_1fr_.7fr_.7fr] border-b border-white/[.06] px-5 py-3 text-[10px] font-bold uppercase tracking-[.18em] text-slate-600 md:grid"><span>Athlete</span><span>Phase</span><span>Check-in</span><span>Signal</span></div>{clients.map((client,index)=><Link href={`/clients/${index+1}`} key={client.name} className="grid gap-3 border-b border-white/[.05] p-5 last:border-0 hover:bg-white/[.02] md:grid-cols-[1.4fr_1fr_.7fr_.7fr] md:items-center"><div className="flex items-center gap-3"><div className="grid size-10 place-items-center border border-violet-400/20 bg-violet-500/10 text-xs font-bold text-violet-200">{client.name.split(" ").map(p=>p[0]).join("")}</div><div><div className="text-sm font-semibold text-white">{client.name}</div><div className="text-xs text-slate-600">{client.adherence}% adherence</div></div></div><span className="text-sm text-slate-400">{client.phase}</span><span className={client.checkIn==="Overdue"?"text-sm text-fuchsia-300":"text-sm text-slate-400"}>{client.checkIn}</span><span className="text-xs uppercase tracking-wider text-violet-300">{client.status}</span></Link>)}</Panel></> }
+export default function ClientsPage() {
+  return (
+    <>
+      <SectionHeader
+        eyebrow="Roster management"
+        title="Clients"
+        description="One view of each athlete's phase, adherence, and next coaching action."
+        action={<Button><Plus size={15} /> Invite client</Button>}
+      />
+
+      <div className="mb-5 flex flex-wrap gap-3">
+        <div className="flex min-w-56 flex-1 items-center gap-3 border-2 border-edge bg-coal px-4 py-3 text-ash">
+          <Search size={15} />
+          <span className="mono-label">Search athletes</span>
+        </div>
+        <Button variant="secondary"><Filter size={15} /> Filter</Button>
+      </div>
+
+      <div className="space-y-3">
+        {clients.map((client, index) => (
+          <Link href={`/clients/${index + 1}`} key={client.name} className="block">
+            <article
+              className={`slab slab-lift grid gap-4 p-5 md:grid-cols-[1.5fr_1fr_.7fr_.8fr] md:items-center ${client.status === "attention" ? "slab-alert" : ""}`}
+            >
+              <div className="flex items-center gap-4">
+                <div className="grid size-12 shrink-0 place-items-center border-2 border-neon bg-neon font-mono text-xs font-extrabold text-void">
+                  {client.name.split(" ").map((part) => part[0]).join("")}
+                </div>
+                <div className="min-w-0">
+                  <h2 className="headline text-2xl text-bone">{client.name}</h2>
+                  <div className="mono-label mt-1">{client.adherence}% adherence</div>
+                </div>
+              </div>
+              <div>
+                <div className="mono-label text-[.52rem]">Phase</div>
+                <div className="mt-1 text-sm text-bone">{client.phase}</div>
+              </div>
+              <div>
+                <div className="mono-label text-[.52rem]">Check-in</div>
+                <div className={`mt-1 text-sm ${client.checkIn === "Overdue" ? "text-alert" : "text-bone"}`}>{client.checkIn}</div>
+              </div>
+              <div className="md:text-right">
+                <span className={`mono-label border-2 px-2.5 py-1.5 text-[.55rem] ${client.status === "attention" ? "border-alert text-alert" : "border-edge text-lilac"}`}>
+                  {client.status}
+                </span>
+              </div>
+            </article>
+          </Link>
+        ))}
+      </div>
+    </>
+  );
+}

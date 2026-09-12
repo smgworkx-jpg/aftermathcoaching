@@ -1,13 +1,20 @@
 import Link from "next/link";
 
+// Stacked logotype: a solid purple slab holding the AX monogram, with the
+// wordmark set in the display face. The slab shifts on hover like a stamp.
 export function BrandMark({ compact = false }: { compact?: boolean }) {
   return (
     <Link href="/" className="group flex items-center gap-3">
-      <span className="relative grid size-9 place-items-center overflow-hidden border border-violet-400/40 bg-violet-500/10 shadow-[0_0_28px_rgba(139,92,246,.2)] [clip-path:polygon(0_0,100%_0,100%_72%,72%_100%,0_100%)]">
-        <span className="absolute h-px w-7 rotate-[-43deg] bg-violet-300" />
-        <span className="font-display text-xs font-bold tracking-[-.08em] text-white">AX</span>
+      <span className="relative grid size-10 shrink-0 place-items-center border-2 border-neon bg-neon text-void transition group-hover:bg-lilac group-hover:border-lilac">
+        <span className="font-display text-lg leading-none tracking-tight text-void">AX</span>
+        <span className="absolute -bottom-1 -right-1 size-2 bg-bone" />
       </span>
-      {!compact && <span><span className="block font-display text-lg font-bold uppercase tracking-[.14em] text-white">Aftermath X</span><span className="block text-[9px] uppercase tracking-[.42em] text-violet-300">Blacklinez Systems</span></span>}
+      {!compact && (
+        <span className="leading-none">
+          <span className="block font-display text-xl uppercase tracking-wide text-bone">Aftermath X</span>
+          <span className="mono-label mt-1 block text-[.55rem] text-lilac">Blacklinez Systems</span>
+        </span>
+      )}
     </Link>
   );
 }
