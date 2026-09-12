@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import { BrandMark } from "@/components/brand-mark";
+import { RequestCoachingButton } from "@/components/billing/request-coaching-button";
 
 export function MarketingHeader() {
   return (
@@ -9,11 +12,13 @@ export function MarketingHeader() {
         <nav className="hidden items-center gap-8 text-xs font-semibold uppercase tracking-[.16em] text-slate-400 md:flex">
           <Link className="transition hover:text-white" href="/#platform">Platform</Link>
           <Link className="transition hover:text-white" href="/#method">Method</Link>
-          <Link className="transition hover:text-white" href="/pricing">Pricing</Link>
+          <Link className="transition hover:text-white" href="/pricing">Coaching</Link>
         </nav>
         <div className="flex items-center gap-2">
           <Link className="hidden px-4 py-2 text-sm text-slate-300 sm:block" href="/login">Sign in</Link>
-          <Link className="clip-button bg-violet-500 px-5 py-3 text-xs font-bold uppercase tracking-[.14em] text-white" href="/signup">Apply now</Link>
+          <RequestCoachingButton className="clip-button bg-violet-500 px-5 py-3 text-xs font-bold uppercase tracking-[.14em] text-white transition hover:bg-violet-400">
+            Apply now
+          </RequestCoachingButton>
         </div>
       </div>
     </header>
